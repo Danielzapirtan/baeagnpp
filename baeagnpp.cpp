@@ -14,3 +14,11 @@ typedef struct {
 	int flags;
 } MOVE;
 
+typedef struct {
+	BOARD board;
+	MOVE moves[];
+	int side;
+	int count;	
+	(void *) gen(void);
+} GEN;
+
