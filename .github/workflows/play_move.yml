@@ -20,7 +20,7 @@ jobs:
       run: |
         test -f build.sh || (echo "File build.sh not found" && exit 1)
         chmod +x build.sh
-        build.sh || echo "Compilation error"
+        sh build.sh || echo "Compilation error"
         
     - name: Verify binary exists
       run: test -f baeagn || (echo "Binary not found" && exit 1)
