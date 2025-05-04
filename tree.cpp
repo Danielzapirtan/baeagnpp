@@ -28,7 +28,8 @@ void TREE::Eval(LEVEL level)
 	nodes++;
 	if ((nodes % (NODES) _SKIPFRAMES) == 0L) {
 		Time.update();
-		usleep(20000); // Cooler
+		if ((double) nodes >= 1e9)
+			exit(0);
 	}
 	EVAL eval;
 	eval.board = board;
@@ -107,7 +108,7 @@ void TREE::Analysis(void)
 	Time.init();
 	nodes = 0L;
 	pvsready = 0;
-	LEVEL maxlevel = 8;
+	LEVEL maxlevel = 10;
 	for (LEVEL depth1 = 5; depth1 < maxlevel; depth1 += 1) {
 		root = this;
 		parent = NULL;

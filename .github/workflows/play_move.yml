@@ -2,20 +2,10 @@ name: CalVar
 
 on:
   workflow_dispatch:
-    inputs:
-      game_symbol:
-        description: "Game symbol"
-        required: true
-        type: string
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        depths: [64]
-      fail-fast: false
     
     steps:
     - name: Checkout code
@@ -24,8 +14,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y build-essential pgn-extract clang-tools pychess
-        pip3 install python-chess
+        sudo apt install -y build-essential
         
     - name: Build project
       run: |
@@ -39,21 +28,14 @@ jobs:
     - name: Install binary
       run: sudo install -m 0755 baeagn /usr/local/bin
       
-    - name: Check for benchmark script
-      run: test -f bin/bench.sh || (echo "Benchmark script not found" && exit 1)
-
-    - name: Save PGN to file
-      run: |
-        mkdir -p input
-        cp -a pgn/${{ inputs.game_symbol }}.pgn input/game.pgn
-
     - name: Run benchmarks ${{ inputs.game_symbol }}
       run: |
-        bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }}
+        mkdir -p anl
+        ./baeagn | tee anl/start.anl
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
-        name: analysis-${{ inputs.game_symbol }}-${{ matrix.depths }} 
-        path: ${{ inputs.game_symbol }}.d${{ matrix.depths }}.anl
-      
+        name: analysis
+        path: anl/start.anl
+
