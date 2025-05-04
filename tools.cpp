@@ -1,8 +1,6 @@
 #include "config.h"
 #include "board.h"
 
-#define _SHARE_DIR "/usr/local/share/baeagn/"
-
 void makemove(BOARD src, MOVE move, BOARD &dest)
 {
 	dest = src;
@@ -151,7 +149,6 @@ int board_cmp(BOARD src, BOARD dest)
 int main(int argc, char *argv[])
 {
 	gmode = 4;
-	chdir(_SHARE_DIR);
 	TREE tree;
 	tree.Analysis();
 	return (0);

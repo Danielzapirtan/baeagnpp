@@ -107,7 +107,8 @@ void TREE::Analysis(void)
 	Time.init();
 	nodes = 0L;
 	pvsready = 0;
-	for (LEVEL depth1 = 5; depth1 < _MAXLEVEL - _OVERDEPTH; depth1 += 1) {
+	LEVEL maxlevel = 8;
+	for (LEVEL depth1 = 5; depth1 < maxlevel; depth1 += 1) {
 		root = this;
 		parent = NULL;
 		level = 0;
